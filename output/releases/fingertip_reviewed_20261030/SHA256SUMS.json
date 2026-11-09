@@ -1,0 +1,6 @@
+{
+  "graph.json": "7252cfa9cecc48907b392a8fff5ccd6d6c10af77b156112a785c2680e0093ea6",
+  "weights.npz": "279a1504af8f773bcd680286e531f089ee2d8cc01a03cb6b7eef85f8fa32fb10",
+  "best.pt": "56402b019b15e50bd7f2f15cff3f39c38a73b63f8e29d9f3aa1e3bcea4ff9411",
+  "fingertip_heatmap_candidate.onnx": "b71ce214d94098de9b14224e6c3514bad3c6096974c1b767bf52d434598cea8a"
+}

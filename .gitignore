@@ -1,0 +1,57 @@
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.venv/
+
+# JavaScript
+node_modules/
+npm-debug.log*
+
+# Vivado, Vitis HLS and simulation products
+*.jou
+*.log
+*.pb
+*.wdb
+*.wcfg
+*.vcd
+*.dcp
+*.bit
+*.hwh
+*.xsa
+.Xil/
+xsim.dir/
+.autopilot/
+build/
+build_*/
+solution*/
+hls/**/build/
+hls/**/solution*/
+
+# Local data and recordings
+datasets/
+diagnostics/
+models/
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.wav
+
+# Local environment and editor files
+.env
+.env.*
+*.pem
+*.key
+.vscode/
+.idea/
+Thumbs.db
+Desktop.ini
+
+# Generated QA pages and temporary archives
+qa/
+*.tmp
+*.zip
+*.tar
+*.tar.gz

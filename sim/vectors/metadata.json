@@ -1,0 +1,28 @@
+{
+  "silence": {
+    "frequencies": [],
+    "max_fft_magnitude": 0.0
+  },
+  "a4": {
+    "frequencies": [
+      440.0
+    ],
+    "max_fft_magnitude": 10741187.324057283
+  },
+  "c_major": {
+    "frequencies": [
+      261.6256,
+      329.6276,
+      391.9954
+    ],
+    "max_fft_magnitude": 4052414.4607098433
+  },
+  "a_minor": {
+    "frequencies": [
+      220.0,
+      261.6256,
+      329.6276
+    ],
+    "max_fft_magnitude": 4056283.919446905
+  }
+}

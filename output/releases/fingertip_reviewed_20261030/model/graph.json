@@ -1,0 +1,851 @@
+{
+  "version": 1,
+  "source_sha256": "b71ce214d94098de9b14224e6c3514bad3c6096974c1b767bf52d434598cea8a",
+  "inputs": [
+    "image"
+  ],
+  "outputs": [
+    "fingertip_heatmaps"
+  ],
+  "output_order_sha256": "43b906809666e07ebc027814d1132a15a801b7a5b074c36f5cb2a2c4f2bd6897",
+  "nodes": [
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "image",
+        "onnx::Conv_210",
+        "onnx::Conv_211"
+      ],
+      "output": "/backbone/conv1/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 1,
+        "kernel_shape": [
+          3,
+          3
+        ],
+        "pads": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "strides": [
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "op": "Clip",
+      "inputs": [
+        "/backbone/conv1/conv/Conv_output_0"
+      ],
+      "output": "/backbone/conv1/activate/Clip_output_0",
+      "attrs": {
+        "min": 0.0,
+        "max": 6.0
+      }
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/backbone/conv1/activate/Clip_output_0",
+        "onnx::Conv_213",
+        "onnx::Conv_214"
+      ],
+      "output": "/backbone/layer1/layer1.0/conv/conv.0/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 32,
+        "kernel_shape": [
+          3,
+          3
+        ],
+        "pads": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "op": "Clip",
+      "inputs": [
+        "/backbone/layer1/layer1.0/conv/conv.0/conv/Conv_output_0"
+      ],
+      "output": "/backbone/layer1/layer1.0/conv/conv.0/activate/Clip_output_0",
+      "attrs": {
+        "min": 0.0,
+        "max": 6.0
+      }
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/backbone/layer1/layer1.0/conv/conv.0/activate/Clip_output_0",
+        "onnx::Conv_216",
+        "onnx::Conv_217"
+      ],
+      "output": "/backbone/layer1/layer1.0/conv/conv.1/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 1,
+        "kernel_shape": [
+          1,
+          1
+        ],
+        "pads": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/backbone/layer1/layer1.0/conv/conv.1/conv/Conv_output_0",
+        "onnx::Conv_219",
+        "onnx::Conv_220"
+      ],
+      "output": "/backbone/layer2/layer2.0/conv/conv.0/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 1,
+        "kernel_shape": [
+          1,
+          1
+        ],
+        "pads": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "op": "Clip",
+      "inputs": [
+        "/backbone/layer2/layer2.0/conv/conv.0/conv/Conv_output_0"
+      ],
+      "output": "/backbone/layer2/layer2.0/conv/conv.0/activate/Clip_output_0",
+      "attrs": {
+        "min": 0.0,
+        "max": 6.0
+      }
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/backbone/layer2/layer2.0/conv/conv.0/activate/Clip_output_0",
+        "onnx::Conv_222",
+        "onnx::Conv_223"
+      ],
+      "output": "/backbone/layer2/layer2.0/conv/conv.1/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 96,
+        "kernel_shape": [
+          3,
+          3
+        ],
+        "pads": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "strides": [
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "op": "Clip",
+      "inputs": [
+        "/backbone/layer2/layer2.0/conv/conv.1/conv/Conv_output_0"
+      ],
+      "output": "/backbone/layer2/layer2.0/conv/conv.1/activate/Clip_output_0",
+      "attrs": {
+        "min": 0.0,
+        "max": 6.0
+      }
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/backbone/layer2/layer2.0/conv/conv.1/activate/Clip_output_0",
+        "onnx::Conv_225",
+        "onnx::Conv_226"
+      ],
+      "output": "/backbone/layer2/layer2.0/conv/conv.2/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 1,
+        "kernel_shape": [
+          1,
+          1
+        ],
+        "pads": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/backbone/layer2/layer2.0/conv/conv.2/conv/Conv_output_0",
+        "onnx::Conv_228",
+        "onnx::Conv_229"
+      ],
+      "output": "/backbone/layer2/layer2.1/conv/conv.0/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 1,
+        "kernel_shape": [
+          1,
+          1
+        ],
+        "pads": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "op": "Clip",
+      "inputs": [
+        "/backbone/layer2/layer2.1/conv/conv.0/conv/Conv_output_0"
+      ],
+      "output": "/backbone/layer2/layer2.1/conv/conv.0/activate/Clip_output_0",
+      "attrs": {
+        "min": 0.0,
+        "max": 6.0
+      }
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/backbone/layer2/layer2.1/conv/conv.0/activate/Clip_output_0",
+        "onnx::Conv_231",
+        "onnx::Conv_232"
+      ],
+      "output": "/backbone/layer2/layer2.1/conv/conv.1/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 144,
+        "kernel_shape": [
+          3,
+          3
+        ],
+        "pads": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "op": "Clip",
+      "inputs": [
+        "/backbone/layer2/layer2.1/conv/conv.1/conv/Conv_output_0"
+      ],
+      "output": "/backbone/layer2/layer2.1/conv/conv.1/activate/Clip_output_0",
+      "attrs": {
+        "min": 0.0,
+        "max": 6.0
+      }
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/backbone/layer2/layer2.1/conv/conv.1/activate/Clip_output_0",
+        "onnx::Conv_234",
+        "onnx::Conv_235"
+      ],
+      "output": "/backbone/layer2/layer2.1/conv/conv.2/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 1,
+        "kernel_shape": [
+          1,
+          1
+        ],
+        "pads": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "op": "Add",
+      "inputs": [
+        "/backbone/layer2/layer2.0/conv/conv.2/conv/Conv_output_0",
+        "/backbone/layer2/layer2.1/conv/conv.2/conv/Conv_output_0"
+      ],
+      "output": "/backbone/layer2/layer2.1/Add_output_0",
+      "attrs": {}
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/backbone/layer2/layer2.1/Add_output_0",
+        "onnx::Conv_237",
+        "onnx::Conv_238"
+      ],
+      "output": "/backbone/layer3/layer3.0/conv/conv.0/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 1,
+        "kernel_shape": [
+          1,
+          1
+        ],
+        "pads": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "op": "Clip",
+      "inputs": [
+        "/backbone/layer3/layer3.0/conv/conv.0/conv/Conv_output_0"
+      ],
+      "output": "/backbone/layer3/layer3.0/conv/conv.0/activate/Clip_output_0",
+      "attrs": {
+        "min": 0.0,
+        "max": 6.0
+      }
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/backbone/layer3/layer3.0/conv/conv.0/activate/Clip_output_0",
+        "onnx::Conv_240",
+        "onnx::Conv_241"
+      ],
+      "output": "/backbone/layer3/layer3.0/conv/conv.1/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 144,
+        "kernel_shape": [
+          3,
+          3
+        ],
+        "pads": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "strides": [
+          2,
+          2
+        ]
+      }
+    },
+    {
+      "op": "Clip",
+      "inputs": [
+        "/backbone/layer3/layer3.0/conv/conv.1/conv/Conv_output_0"
+      ],
+      "output": "/backbone/layer3/layer3.0/conv/conv.1/activate/Clip_output_0",
+      "attrs": {
+        "min": 0.0,
+        "max": 6.0
+      }
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/backbone/layer3/layer3.0/conv/conv.1/activate/Clip_output_0",
+        "onnx::Conv_243",
+        "onnx::Conv_244"
+      ],
+      "output": "/backbone/layer3/layer3.0/conv/conv.2/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 1,
+        "kernel_shape": [
+          1,
+          1
+        ],
+        "pads": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/backbone/layer3/layer3.0/conv/conv.2/conv/Conv_output_0",
+        "onnx::Conv_246",
+        "onnx::Conv_247"
+      ],
+      "output": "/backbone/layer3/layer3.1/conv/conv.0/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 1,
+        "kernel_shape": [
+          1,
+          1
+        ],
+        "pads": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "op": "Clip",
+      "inputs": [
+        "/backbone/layer3/layer3.1/conv/conv.0/conv/Conv_output_0"
+      ],
+      "output": "/backbone/layer3/layer3.1/conv/conv.0/activate/Clip_output_0",
+      "attrs": {
+        "min": 0.0,
+        "max": 6.0
+      }
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/backbone/layer3/layer3.1/conv/conv.0/activate/Clip_output_0",
+        "onnx::Conv_249",
+        "onnx::Conv_250"
+      ],
+      "output": "/backbone/layer3/layer3.1/conv/conv.1/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 192,
+        "kernel_shape": [
+          3,
+          3
+        ],
+        "pads": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "op": "Clip",
+      "inputs": [
+        "/backbone/layer3/layer3.1/conv/conv.1/conv/Conv_output_0"
+      ],
+      "output": "/backbone/layer3/layer3.1/conv/conv.1/activate/Clip_output_0",
+      "attrs": {
+        "min": 0.0,
+        "max": 6.0
+      }
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/backbone/layer3/layer3.1/conv/conv.1/activate/Clip_output_0",
+        "onnx::Conv_252",
+        "onnx::Conv_253"
+      ],
+      "output": "/backbone/layer3/layer3.1/conv/conv.2/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 1,
+        "kernel_shape": [
+          1,
+          1
+        ],
+        "pads": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "op": "Add",
+      "inputs": [
+        "/backbone/layer3/layer3.0/conv/conv.2/conv/Conv_output_0",
+        "/backbone/layer3/layer3.1/conv/conv.2/conv/Conv_output_0"
+      ],
+      "output": "/backbone/layer3/layer3.1/Add_output_0",
+      "attrs": {}
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/backbone/layer3/layer3.1/Add_output_0",
+        "onnx::Conv_255",
+        "onnx::Conv_256"
+      ],
+      "output": "/backbone/layer3/layer3.2/conv/conv.0/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 1,
+        "kernel_shape": [
+          1,
+          1
+        ],
+        "pads": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "op": "Clip",
+      "inputs": [
+        "/backbone/layer3/layer3.2/conv/conv.0/conv/Conv_output_0"
+      ],
+      "output": "/backbone/layer3/layer3.2/conv/conv.0/activate/Clip_output_0",
+      "attrs": {
+        "min": 0.0,
+        "max": 6.0
+      }
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/backbone/layer3/layer3.2/conv/conv.0/activate/Clip_output_0",
+        "onnx::Conv_258",
+        "onnx::Conv_259"
+      ],
+      "output": "/backbone/layer3/layer3.2/conv/conv.1/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 192,
+        "kernel_shape": [
+          3,
+          3
+        ],
+        "pads": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "op": "Clip",
+      "inputs": [
+        "/backbone/layer3/layer3.2/conv/conv.1/conv/Conv_output_0"
+      ],
+      "output": "/backbone/layer3/layer3.2/conv/conv.1/activate/Clip_output_0",
+      "attrs": {
+        "min": 0.0,
+        "max": 6.0
+      }
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/backbone/layer3/layer3.2/conv/conv.1/activate/Clip_output_0",
+        "onnx::Conv_261",
+        "onnx::Conv_262"
+      ],
+      "output": "/backbone/layer3/layer3.2/conv/conv.2/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 1,
+        "kernel_shape": [
+          1,
+          1
+        ],
+        "pads": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "op": "Add",
+      "inputs": [
+        "/backbone/layer3/layer3.1/Add_output_0",
+        "/backbone/layer3/layer3.2/conv/conv.2/conv/Conv_output_0"
+      ],
+      "output": "/backbone/layer3/layer3.2/Add_output_0",
+      "attrs": {}
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/backbone/layer3/layer3.2/Add_output_0",
+        "onnx::Conv_264",
+        "onnx::Conv_265"
+      ],
+      "output": "/heatmap_head/heatmap_head.0/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 32,
+        "kernel_shape": [
+          3,
+          3
+        ],
+        "pads": [
+          1,
+          1,
+          1,
+          1
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "op": "Clip",
+      "inputs": [
+        "/heatmap_head/heatmap_head.0/conv/Conv_output_0"
+      ],
+      "output": "/heatmap_head/heatmap_head.0/activate/Clip_output_0",
+      "attrs": {
+        "min": 0.0,
+        "max": 6.0
+      }
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/heatmap_head/heatmap_head.0/activate/Clip_output_0",
+        "onnx::Conv_267",
+        "onnx::Conv_268"
+      ],
+      "output": "/heatmap_head/heatmap_head.1/conv/Conv_output_0",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 1,
+        "kernel_shape": [
+          1,
+          1
+        ],
+        "pads": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      }
+    },
+    {
+      "op": "Clip",
+      "inputs": [
+        "/heatmap_head/heatmap_head.1/conv/Conv_output_0"
+      ],
+      "output": "/heatmap_head/heatmap_head.1/activate/Clip_output_0",
+      "attrs": {
+        "min": 0.0,
+        "max": 6.0
+      }
+    },
+    {
+      "op": "PLConvolution",
+      "inputs": [
+        "/heatmap_head/heatmap_head.1/activate/Clip_output_0",
+        "heatmap_head.2.weight",
+        "heatmap_head.2.bias"
+      ],
+      "output": "fingertip_heatmaps",
+      "attrs": {
+        "dilations": [
+          1,
+          1
+        ],
+        "group": 1,
+        "kernel_shape": [
+          1,
+          1
+        ],
+        "pads": [
+          0,
+          0,
+          0,
+          0
+        ],
+        "strides": [
+          1,
+          1
+        ]
+      }
+    }
+  ],
+  "weights_sha256": "279a1504af8f773bcd680286e531f089ee2d8cc01a03cb6b7eef85f8fa32fb10",
+  "model_contract": {
+    "input_nchw": [
+      1,
+      3,
+      208,
+      208
+    ],
+    "output_nchw": [
+      1,
+      4,
+      26,
+      26
+    ],
+    "points": [
+      "index",
+      "middle",
+      "ring",
+      "little"
+    ],
+    "preprocess": "RGB float32; MMPose ImageNet mean/std"
+  },
+  "operator_counts": {
+    "PLConvolution": 21,
+    "Clip": 14,
+    "Add": 3
+  }
+}

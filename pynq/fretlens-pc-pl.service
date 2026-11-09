@@ -1,0 +1,14 @@
+[Unit]
+Description=PC camera frames to FPGA grayscale, Sobel and pyramidal LK
+After=network.target
+
+[Service]
+Type=simple
+Environment=XILINX_XRT=/usr
+Environment=OPENBLAS_NUM_THREADS=1
+Environment=OMP_NUM_THREADS=1
+Environment=FRETLENS_FLOW_POINTS=32
+ExecStart=/usr/local/share/pynq-venv/bin/python3 -B /home/xilinx/pc_pl_bridge/vision_pc_bridge.py --bitfile /home/xilinx/vision_pl/releases/20261020_cached/vision_pl.bit --load-overlay --hls-flow
+Restart=no
+
+# Deliberately not enabled at boot: starting replaces audio/other PL overlays.

@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#f4f5f6" />
+    <title>FretLens · 指法与音频识别</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <h1>指法与音频识别 <small>FretLens</small></h1>
+        <div class="system-states" aria-label="音频连接状态">
+          <span class="system-chip" id="audioChip" data-state="idle"><i></i>音频</span>
+          <span class="system-chip" id="fpgaChip" data-state="idle"><i></i>板卡</span>
+        </div>
+      </header>
+      <main id="workspace">
+        <section class="input-controls" aria-label="设备连接">
+          <button class="button button-primary" id="cameraButton" type="button">打开摄像头</button>
+          <button class="button" id="hardwareButton" type="button" aria-pressed="false" title="连接板卡音频">连接板卡音频</button>
+          <p class="control-message" id="controlMessage" role="status" aria-live="polite">等待音频输入。</p>
+        </section>
+        <section class="results" aria-label="识别结果">
+          <div class="result-item primary-result" aria-live="polite">
+            <h2>当前和弦</h2><strong id="chordName">--</strong><small id="chordNotes">等待音频输入</small>
+          </div>
+          <div class="result-item note-result"><h2 id="noteLabel">检测到的音</h2><strong id="noteResult">--</strong></div>
+          <p class="truth-note" id="truthNote" role="status">尚无识别结果。</p>
+        </section>
+        <section class="camera-panel" aria-labelledby="videoTitle">
+          <div class="panel-heading"><h2 id="videoTitle">指板画面</h2><span id="overlayState" class="tracking-status">等待画面</span></div>
+          <div class="camera-stage" id="cameraStage" data-mode="idle">
+            <video id="cameraVideo" autoplay muted playsinline aria-label="实时吉他指板画面"></video>
+            <canvas id="fretOverlay" width="960" height="720" aria-label="指板、琴弦和指尖位置"></canvas>
+            <div class="camera-empty" id="cameraEmpty"><strong id="cameraEmptyTitle">摄像头未连接</strong></div>
+            <div class="video-status" aria-label="视频处理状态">
+              <p id="visionStatus" role="status">摄像头未连接</p>
+              <p id="neckTrackingStatus" role="status">琴颈跟踪：等待画面</p>
+              <p id="handDetectionStatus" role="status">手部检测：等待摄像头</p>
+            </div>
+          </div>
+        </section>
+        <section class="fingertip-preview" id="fingertipPreview" data-state="waiting" aria-labelledby="fingertipPreviewTitle">
+          <div class="panel-heading"><h2 id="fingertipPreviewTitle">四指尖 · PL 推理</h2><span id="fingertipPreviewStatus" role="status">等待板卡推理</span></div>
+          <div class="fingertip-preview-content">
+            <figure id="fingertipPreviewFigure" hidden><canvas id="fingertipPreviewCanvas" width="208" height="208" aria-label="历史源 ROI 与四个预测指尖，不是当前视频"></canvas><figcaption>历史源 ROI · 非当前画面</figcaption></figure>
+            <div class="fingertip-preview-details">
+              <dl>
+                <div><dt>ROI 时效上界</dt><dd id="fingertipPreviewAge">--</dd></div>
+                <div><dt>PL 图计算</dt><dd id="fingertipPreviewGraph">--</dd></div>
+                <div><dt>推理调用（含预后处理）</dt><dd id="fingertipPreviewInference">--</dd></div>
+                <div><dt>NN 更新率</dt><dd id="fingertipPreviewRate">--</dd></div>
+                <div><dt>跟踪更新率</dt><dd id="fingertipPreviewTracking">--</dd></div>
+              </dl>
+              <p id="fingertipPreviewPoints">1 食指 · 2 中指 · 3 无名指 · 4 小指</p>
+              <p id="fingertipPreviewNote">等待同一视频会话的 PL 结果；原始峰值不是正确率。</p>
+            </div>
+          </div>
+        </section>
+        <section class="fingering-panel" aria-labelledby="fingeringTitle">
+          <div class="panel-heading"><h2 id="fingeringTitle">指法</h2><span id="fingeringState" role="status">等待音视频</span></div>
+          <div class="fingering-content">
+            <div class="chord-chart"><h3>画面中观察到的指法</h3><div id="observedFingering"></div><p id="observedFingeringNote">尚无可靠的弦与品位。</p></div>
+            <div class="chord-chart"><h3>音视频推荐和弦图</h3><div id="referenceFingering"></div><p id="referenceFingeringNote">等待和弦识别。</p></div>
+          </div>
+          <div class="finger-result"><span>按弦位置</span><strong id="visualEvidence">等待指板定位</strong></div>
+        </section>
+        <details class="debug-details" id="debugDetails">
+          <summary>设置与详情</summary>
+          <div class="debug-content">
+            <section aria-label="摄像头与识别设置">
+              <h2>摄像头与识别</h2>
+              <div class="device-selectors">
+                <label>摄像头<select id="cameraSelect" disabled><option>尚未启用</option></select></label>
+              </div>
+          <div class="vision-controls" aria-label="指板标定与识别">
+            <label class="follow-neck"><input id="pcPlEnabled" type="checkbox" checked />板卡视觉处理</label>
+            <label class="follow-neck"><input id="focusFretboard" type="checkbox" checked />只看指板</label>
+            <label class="follow-neck"><input id="autoFretboard" type="checkbox" checked />自动找弦与品丝</label>
+            <button class="button" id="selectNeckButton" type="button">框选琴颈</button>
+            <button class="button" id="handModelButton" type="button">启动指尖检测</button>
+            <label class="follow-neck"><input id="followNeck" type="checkbox" checked disabled />跟随琴颈</label>
+            <button class="button button-quiet" id="visionStopButton" type="button">停止视频</button>
+            <details class="calibration-settings" id="calibrationSettings">
+              <summary>标定设置</summary>
+              <div class="settings-fields">
+                <button class="button" id="calibrateButton" type="button" title="依次选择6弦起点、6弦终点、1弦终点、1弦起点">手动标定</button>
+                <label>起点品位<input id="firstFret" type="number" min="0" max="23" value="0" /></label>
+                <label>终点品位<input id="lastFret" type="number" min="1" max="24" value="12" /></label>
+                <button class="button" id="clearCalibrationButton" type="button">清除标定</button>
+              </div>
+              <div class="settings-fields" id="noteCalibrationFields">
+                <label>左侧首条品丝品号（0 为琴枕）<input id="noteFirstBoundary" type="number" min="0" max="24" value="0" /></label>
+                <label>图像上侧琴弦<select id="noteTopString"><option value="6">6 弦 · 低音 E</option><option value="1">1 弦 · 高音 E</option></select></label>
+                <label>品号方向<select id="noteFretDirection"><option value="ascending">向右递增</option><option value="descending">向左递增</option></select></label>
+                <button class="button" id="applyNoteCalibration" type="button">确认六弦与连续品丝</button>
+                <button class="button button-quiet" id="clearNoteCalibration" type="button">清除音符标定</button>
+                <span id="noteCalibrationStatus" role="status">音符未标定 · 标准调弦 E A D G B E</span>
+              </div>
+            </details>
+          </div>
+            </section>
+          <div id="preprocessDetails" hidden>
+          <div class="preprocess-views" aria-label="指板图像处理">
+            <figure><figcaption>灰度 <small id="grayPreviewBackend">网页预览</small></figcaption><canvas id="grayPreview" width="320" height="120" aria-label="指板区域灰度图"></canvas></figure>
+            <figure><figcaption>边缘 <small id="edgePreviewBackend">网页预览</small></figcaption><canvas id="edgePreview" width="320" height="120" aria-label="指板区域边缘图"></canvas></figure>
+          </div>
+          </div>
+            <section aria-label="音阶候选">
+              <div class="result-item scale-result"><h2>音阶候选</h2><strong id="scaleResult">--</strong></div>
+            <div class="scale-chart"><h3>音阶候选指板</h3><div id="scaleFingering"></div><p id="scaleFingeringNote">等待连续音符。</p></div>
+            </section>
+            <section aria-labelledby="otherInputsTitle">
+              <h2 id="otherInputsTitle">其他输入</h2>
+              <div class="alternate-controls">
+                <button class="button" id="boardVisionButton" type="button">连接板卡摄像头</button>
+                <button class="button" id="audioButton" type="button">浏览器音频</button>
+                <label class="button file-control">导入视频<input id="visionFile" type="file" accept="video/*" /></label>
+                <button class="button" id="visionTestButton" type="button">视觉测试帧</button>
+                <button class="button" id="demoButton" type="button">模拟演示</button>
+              </div>
+              <div class="device-selectors">
+                <label>电脑音频<select id="inputSelect" disabled><option>尚未启用</option></select></label>
+                <label>画面<select id="visionView"><option value="color">原图</option><option value="gray">灰度 · 网页预览</option><option value="edge">边缘 · 网页预览</option></select></label>
+              </div>
+            </section>
+            <section class="debug-status" aria-label="识别状态">
+              <h2>运行状态</h2>
+              <dl>
+                <div><dt>音频来源</dt><dd id="provenanceBadge" data-kind="idle">无音频输入</dd></div>
+                <div><dt>画面来源</dt><dd id="frameStatusText">未连接</dd></div>
+                <div><dt>视频帧率</dt><dd id="videoRate">--</dd></div>
+                <div><dt>PL 灰度 / 边缘</dt><dd id="plVisionStatus">PL 未连接</dd></div>
+                <div><dt>识别置信度</dt><dd id="fusionConfidence">--</dd></div>
+                <div><dt id="confidenceLabel">视听一致性</dt><dd id="agreementText">尚无结论</dd></div>
+                <div><dt>和弦候选</dt><dd id="chordCandidates">--</dd></div>
+                <div><dt>音符置信度</dt><dd id="audioEvidence">--</dd></div>
+                <div><dt>音阶说明</dt><dd id="scaleAlternative">等待连续音符</dd></div>
+                <div><dt>处理帧</dt><dd id="processingSequence">--</dd></div>
+                <div><dt>接口与采集</dt><dd id="protocolStatus">等待板卡数据</dd></div>
+              </dl>
+              <p id="cameraHint">--</p>
+              <div class="agreement-track" aria-hidden="true"><i id="agreementBar"></i></div>
+              <span class="system-chip" id="cameraChip" data-state="idle"><i></i>电脑摄像头</span>
+              <span id="frameClock" hidden></span>
+            </section>
+            <section class="diagnostics" id="evidence" aria-label="音频波形与频谱">
+              <div class="signal-panel">
+                <div class="panel-heading"><h2>波形</h2><span id="sampleRateText">--</span></div>
+                <canvas id="waveformCanvas" width="900" height="250" aria-label="实时音频波形"></canvas>
+                <small id="waveformStatus">无输入</small>
+              </div>
+              <div class="signal-panel">
+                <div class="panel-heading"><h2>频谱</h2><span id="spectrumRange">--</span></div>
+                <canvas id="spectrumCanvas" width="900" height="250" aria-label="音频频谱"></canvas>
+              </div>
+            </section>
+            <section class="timeline" aria-labelledby="timelineTitle">
+              <div class="panel-heading"><h2 id="timelineTitle">最近识别</h2><span id="timelineStatus">--</span></div>
+              <div class="event-track" id="eventTrack">
+                <div class="event-spacer"><span id="timelineAxis">--</span></div>
+                <div class="event event-visual" id="visualEvent" style="--start: 0%; --width: 31%" hidden><strong></strong><small></small></div>
+                <div class="event event-audio" id="audioEvent" style="--start: 34%; --width: 31%" hidden><strong></strong><small></small></div>
+                <div class="event event-fused" id="resultEvent" style="--start: 68%; --width: 31%" hidden><strong></strong><small></small></div>
+              </div>
+            </section>
+          </div>
+        </details>
+      </main>
+      <footer class="footer"><span>FretLens</span><span id="footerClock">--:--:--</span></footer>
+    </div>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="fretboard.js"></script>
+    <script src="fingering.js"></script>
+    <script src="chord_library.js"></script>
+    <script src="app.js"></script>
+<script src="vision.js?v=20261030-streamwatchdog"></script>
+    <script src="fingering_panel.js"></script>
+  </body>
+</html>

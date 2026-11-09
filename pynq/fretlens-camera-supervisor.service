@@ -1,0 +1,15 @@
+[Unit]
+Description=FretLens C922 recovery supervisor
+After=fretlens-vision.service
+Wants=fretlens-vision.service
+StartLimitIntervalSec=0
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/python3 -B /home/xilinx/camera_recovery_supervisor.py
+Restart=always
+RestartSec=5
+Nice=-5
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,17 @@
+[Unit]
+Description=FretLens PL grayscale and Sobel preview
+After=network.target
+
+[Service]
+Type=simple
+User=root
+WorkingDirectory=/home/xilinx/vision_pl
+Environment=XILINX_XRT=/usr
+Environment=OPENBLAS_NUM_THREADS=1
+Environment=OMP_NUM_THREADS=1
+ExecStart=/usr/local/share/pynq-venv/bin/python3 -u -B /home/xilinx/vision_pl/vision_pl_server.py --bitfile /home/xilinx/vision_pl/vision_pl.bit --fps 5
+Restart=no
+TimeoutStopSec=8
+
+[Install]
+WantedBy=multi-user.target

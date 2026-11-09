@@ -1,0 +1,13 @@
+{
+  "version": "fingertip-reviewed-20261030",
+  "source": "/home/xilinx/staging/fingertip_reviewed_20261030",
+  "backup": "/home/xilinx/fingertip_candidate_20261026/backup_reviewed_20211201_161518",
+  "graph_sha256": "7252cfa9cecc48907b392a8fff5ccd6d6c10af77b156112a785c2680e0093ea6",
+  "weights_sha256": "279a1504af8f773bcd680286e531f089ee2d8cc01a03cb6b7eef85f8fa32fb10",
+  "board_benchmark": "/home/xilinx/staging/fingertip_reviewed_20261030/board_benchmark_fused.json",
+  "board_benchmark_passed": true,
+  "board_pl_calls": 21,
+  "board_coordinate_shift_max": 0.0,
+  "board_median_total_ms": 782.4079655001697,
+  "board_inference_fps": 1.2781055972004711
+}

@@ -1,0 +1,21 @@
+[Unit]
+Description=Unified FPGA audio and vision with one persistent overlay owner
+PartOf=fretlens-av.target
+After=network.target
+Conflicts=fretlens-pc-pl.service fretlens-pc-flow.service fretlens-vision-pl.service
+
+[Service]
+Type=simple
+Environment=XILINX_XRT=/usr
+Environment=OPENBLAS_NUM_THREADS=1
+Environment=OMP_NUM_THREADS=1
+Environment=FRETLENS_AUDIO_NATIVE=1
+Environment=FRETLENS_FLOW_POINTS=32
+Environment=FRETLENS_VISUAL_STATE=/run/fretlens-visual.json
+ExecStart=/usr/local/share/pynq-venv/bin/python3 -B /home/xilinx/av_system/av_system.py --bitfile /home/xilinx/av_system/av_system.bit --manifest /home/xilinx/av_system/manifest.json --serve
+ExecStopPost=/bin/rm -f /run/fretlens-av.json
+ExecStopPost=/bin/rm -f /run/fretlens-visual.json
+Restart=on-failure
+RestartSec=5
+TimeoutStopSec=45
+KillMode=mixed

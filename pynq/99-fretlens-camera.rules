@@ -1,0 +1,2 @@
+# Keep this C922 active while the board is capturing video.
+ACTION=="add", SUBSYSTEM=="usb", ATTR{idVendor}=="046d", ATTR{idProduct}=="085c", TEST=="power/control", ATTR{power/control}="on", ATTR{power/autosuspend}="-1"

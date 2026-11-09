@@ -1,0 +1,631 @@
+{
+  "framework": "MMPose MobileNetV2 hand-keypoint backbone with lightweight stride-8 heatmap head",
+  "pl_buffer_safe": true,
+  "architecture_note": "Original pretrained backbone stride pattern; the compact depthwise head uses multiplier 1 and a 16-channel pointwise bottleneck. Pair with a 192x192 input to keep all Q16 PL activations within the current 1,048,576-element buffers.",
+  "input_size": 208,
+  "heatmap_size": 26,
+  "pretrained_checkpoint": "D:\\FPGA\\datasets\\guitar_fingertip_pilot\\pretrained\\mmpose_mobilenetv2_onehand10k_256x256_20210330.pth",
+  "pretrained_metadata": {},
+  "loaded_backbone_tensors": 102,
+  "device_used_for_training": "cpu",
+  "pl_intended_compute": "conv/depthwise/pointwise MAC only; PS resize/preprocess/heatmap argmax",
+  "pl_deployment_verified": false,
+  "train_records": 781,
+  "validation_records": 98,
+  "initial_checkpoint": "D:\\FPGA\\datasets\\guitar_fingertip_pilot\\pl_candidate_release_20261026\\best.pt",
+  "initial_validation": {
+    "visible_points": 356,
+    "loss": 0.0038765183398228346,
+    "mean_error_roi_fraction": 0.04896952956914902,
+    "median_error_roi_fraction": 0.03184807300567627,
+    "pck_0_05": 0.7275280898876404,
+    "pck_0_10": 0.898876404494382,
+    "per_finger": {
+      "index": {
+        "visible_points": 98,
+        "median_error_roi_fraction": 0.028098326176404953,
+        "pck_0_05": 0.8061224489795918,
+        "pck_0_10": 0.9591836734693877
+      },
+      "middle": {
+        "visible_points": 98,
+        "median_error_roi_fraction": 0.04137129336595535,
+        "pck_0_05": 0.5816326530612245,
+        "pck_0_10": 0.7959183673469388
+      },
+      "ring": {
+        "visible_points": 98,
+        "median_error_roi_fraction": 0.03035482857376337,
+        "pck_0_05": 0.7448979591836735,
+        "pck_0_10": 0.9285714285714286
+      },
+      "little": {
+        "visible_points": 62,
+        "median_error_roi_fraction": 0.030379032716155052,
+        "pck_0_05": 0.8064516129032258,
+        "pck_0_10": 0.9193548387096774
+      }
+    }
+  },
+  "backbone_lr": 5e-06,
+  "head_lr": 0.0001,
+  "selection_metric": "validation mean_error_roi_fraction",
+  "min_delta": 0.0001,
+  "seed": 20261030,
+  "point_weights": [
+    1.0,
+    1.0,
+    1.0,
+    1.0
+  ],
+  "history": [
+    {
+      "epoch": 1,
+      "train_loss": 0.0029347554623136217,
+      "val": {
+        "visible_points": 356,
+        "loss": 0.0039043191290080914,
+        "mean_error_roi_fraction": 0.04641898348927498,
+        "median_error_roi_fraction": 0.03226642683148384,
+        "pck_0_05": 0.7443820224719101,
+        "pck_0_10": 0.9129213483146067,
+        "per_finger": {
+          "index": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.026551101356744766,
+            "pck_0_05": 0.826530612244898,
+            "pck_0_10": 0.9591836734693877
+          },
+          "middle": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.040125276893377304,
+            "pck_0_05": 0.6428571428571429,
+            "pck_0_10": 0.8367346938775511
+          },
+          "ring": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.02985911164432764,
+            "pck_0_05": 0.7142857142857143,
+            "pck_0_10": 0.9081632653061225
+          },
+          "little": {
+            "visible_points": 62,
+            "median_error_roi_fraction": 0.03355138748884201,
+            "pck_0_05": 0.8225806451612904,
+            "pck_0_10": 0.967741935483871
+          }
+        }
+      }
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.0028580397495072186,
+      "val": {
+        "visible_points": 356,
+        "loss": 0.0038552045155107436,
+        "mean_error_roi_fraction": 0.04718111455440521,
+        "median_error_roi_fraction": 0.03347048908472061,
+        "pck_0_05": 0.7415730337078652,
+        "pck_0_10": 0.9073033707865169,
+        "per_finger": {
+          "index": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.02708024252206087,
+            "pck_0_05": 0.8163265306122449,
+            "pck_0_10": 0.9591836734693877
+          },
+          "middle": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.040125276893377304,
+            "pck_0_05": 0.6428571428571429,
+            "pck_0_10": 0.826530612244898
+          },
+          "ring": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.030611434020102024,
+            "pck_0_05": 0.7040816326530612,
+            "pck_0_10": 0.9081632653061225
+          },
+          "little": {
+            "visible_points": 62,
+            "median_error_roi_fraction": 0.03358155116438866,
+            "pck_0_05": 0.8387096774193549,
+            "pck_0_10": 0.9516129032258065
+          }
+        }
+      }
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.002785375207023416,
+      "val": {
+        "visible_points": 356,
+        "loss": 0.0038768843827714813,
+        "mean_error_roi_fraction": 0.04829622805118561,
+        "median_error_roi_fraction": 0.034673817455768585,
+        "pck_0_05": 0.7162921348314607,
+        "pck_0_10": 0.9044943820224719,
+        "per_finger": {
+          "index": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.027440170757472515,
+            "pck_0_05": 0.8061224489795918,
+            "pck_0_10": 0.9591836734693877
+          },
+          "middle": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.04137129336595535,
+            "pck_0_05": 0.6122448979591837,
+            "pck_0_10": 0.8061224489795918
+          },
+          "ring": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.033220021054148674,
+            "pck_0_05": 0.673469387755102,
+            "pck_0_10": 0.9081632653061225
+          },
+          "little": {
+            "visible_points": 62,
+            "median_error_roi_fraction": 0.03433596342802048,
+            "pck_0_05": 0.8064516129032258,
+            "pck_0_10": 0.967741935483871
+          }
+        }
+      }
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.0027140675562167976,
+      "val": {
+        "visible_points": 356,
+        "loss": 0.0038399966520353637,
+        "mean_error_roi_fraction": 0.04622948542237282,
+        "median_error_roi_fraction": 0.03422972932457924,
+        "pck_0_05": 0.7359550561797753,
+        "pck_0_10": 0.9129213483146067,
+        "per_finger": {
+          "index": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.02760182786732912,
+            "pck_0_05": 0.8061224489795918,
+            "pck_0_10": 0.9591836734693877
+          },
+          "middle": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.0395219661295414,
+            "pck_0_05": 0.6428571428571429,
+            "pck_0_10": 0.8367346938775511
+          },
+          "ring": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.030611434020102024,
+            "pck_0_05": 0.6938775510204082,
+            "pck_0_10": 0.9081632653061225
+          },
+          "little": {
+            "visible_points": 62,
+            "median_error_roi_fraction": 0.03358155116438866,
+            "pck_0_05": 0.8387096774193549,
+            "pck_0_10": 0.967741935483871
+          }
+        }
+      }
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.00270560593821261,
+      "val": {
+        "visible_points": 356,
+        "loss": 0.0038806369132835788,
+        "mean_error_roi_fraction": 0.04704119637608528,
+        "median_error_roi_fraction": 0.03347048908472061,
+        "pck_0_05": 0.7415730337078652,
+        "pck_0_10": 0.9044943820224719,
+        "per_finger": {
+          "index": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.0276951240375638,
+            "pck_0_05": 0.8061224489795918,
+            "pck_0_10": 0.9591836734693877
+          },
+          "middle": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.0395219661295414,
+            "pck_0_05": 0.6530612244897959,
+            "pck_0_10": 0.8163265306122449
+          },
+          "ring": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.030611434020102024,
+            "pck_0_05": 0.6938775510204082,
+            "pck_0_10": 0.8979591836734694
+          },
+          "little": {
+            "visible_points": 62,
+            "median_error_roi_fraction": 0.03320707380771637,
+            "pck_0_05": 0.8548387096774194,
+            "pck_0_10": 0.967741935483871
+          }
+        }
+      }
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.0026679376659559492,
+      "val": {
+        "visible_points": 356,
+        "loss": 0.003844986711715198,
+        "mean_error_roi_fraction": 0.04777476564049721,
+        "median_error_roi_fraction": 0.034036073833703995,
+        "pck_0_05": 0.7387640449438202,
+        "pck_0_10": 0.901685393258427,
+        "per_finger": {
+          "index": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.027440170757472515,
+            "pck_0_05": 0.8163265306122449,
+            "pck_0_10": 0.9591836734693877
+          },
+          "middle": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.039167944341897964,
+            "pck_0_05": 0.6530612244897959,
+            "pck_0_10": 0.8163265306122449
+          },
+          "ring": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.031821862794458866,
+            "pck_0_05": 0.6938775510204082,
+            "pck_0_10": 0.9081632653061225
+          },
+          "little": {
+            "visible_points": 62,
+            "median_error_roi_fraction": 0.03358155116438866,
+            "pck_0_05": 0.8225806451612904,
+            "pck_0_10": 0.9354838709677419
+          }
+        }
+      }
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.0026425938938819493,
+      "val": {
+        "visible_points": 356,
+        "loss": 0.0038491716069991968,
+        "mean_error_roi_fraction": 0.049147702753543854,
+        "median_error_roi_fraction": 0.03445737436413765,
+        "pck_0_05": 0.7331460674157303,
+        "pck_0_10": 0.8932584269662921,
+        "per_finger": {
+          "index": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.02726218570023775,
+            "pck_0_05": 0.826530612244898,
+            "pck_0_10": 0.9591836734693877
+          },
+          "middle": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.0406867191195488,
+            "pck_0_05": 0.6326530612244898,
+            "pck_0_10": 0.7959183673469388
+          },
+          "ring": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.03348817490041256,
+            "pck_0_05": 0.673469387755102,
+            "pck_0_10": 0.8877551020408163
+          },
+          "little": {
+            "visible_points": 62,
+            "median_error_roi_fraction": 0.032770268619060516,
+            "pck_0_05": 0.8387096774193549,
+            "pck_0_10": 0.9516129032258065
+          }
+        }
+      }
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.002621462167820222,
+      "val": {
+        "visible_points": 356,
+        "loss": 0.00385472778573461,
+        "mean_error_roi_fraction": 0.049227114766836166,
+        "median_error_roi_fraction": 0.03445737436413765,
+        "pck_0_05": 0.7219101123595506,
+        "pck_0_10": 0.8932584269662921,
+        "per_finger": {
+          "index": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.029474635608494282,
+            "pck_0_05": 0.8163265306122449,
+            "pck_0_10": 0.9591836734693877
+          },
+          "middle": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.0395219661295414,
+            "pck_0_05": 0.6326530612244898,
+            "pck_0_10": 0.7857142857142857
+          },
+          "ring": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.033441292122006416,
+            "pck_0_05": 0.6326530612244898,
+            "pck_0_10": 0.8979591836734694
+          },
+          "little": {
+            "visible_points": 62,
+            "median_error_roi_fraction": 0.03226642683148384,
+            "pck_0_05": 0.8548387096774194,
+            "pck_0_10": 0.9516129032258065
+          }
+        }
+      }
+    },
+    {
+      "epoch": 9,
+      "train_loss": 0.0025774217416411897,
+      "val": {
+        "visible_points": 356,
+        "loss": 0.0038176226430711733,
+        "mean_error_roi_fraction": 0.04952336847782135,
+        "median_error_roi_fraction": 0.03422972932457924,
+        "pck_0_05": 0.7247191011235955,
+        "pck_0_10": 0.8848314606741573,
+        "per_finger": {
+          "index": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.0276951240375638,
+            "pck_0_05": 0.8163265306122449,
+            "pck_0_10": 0.9591836734693877
+          },
+          "middle": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.04137129336595535,
+            "pck_0_05": 0.5918367346938775,
+            "pck_0_10": 0.7551020408163265
+          },
+          "ring": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.031821862794458866,
+            "pck_0_05": 0.6938775510204082,
+            "pck_0_10": 0.8979591836734694
+          },
+          "little": {
+            "visible_points": 62,
+            "median_error_roi_fraction": 0.03226642683148384,
+            "pck_0_05": 0.8387096774193549,
+            "pck_0_10": 0.9516129032258065
+          }
+        }
+      }
+    },
+    {
+      "epoch": 10,
+      "train_loss": 0.002537444640528148,
+      "val": {
+        "visible_points": 356,
+        "loss": 0.003823508438291926,
+        "mean_error_roi_fraction": 0.04880606010556221,
+        "median_error_roi_fraction": 0.03422972932457924,
+        "pck_0_05": 0.7331460674157303,
+        "pck_0_10": 0.8904494382022472,
+        "per_finger": {
+          "index": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.028565839864313602,
+            "pck_0_05": 0.8163265306122449,
+            "pck_0_10": 0.9591836734693877
+          },
+          "middle": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.0406867191195488,
+            "pck_0_05": 0.6122448979591837,
+            "pck_0_10": 0.7755102040816326
+          },
+          "ring": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.030864590778946877,
+            "pck_0_05": 0.6938775510204082,
+            "pck_0_10": 0.8979591836734694
+          },
+          "little": {
+            "visible_points": 62,
+            "median_error_roi_fraction": 0.03022162150591612,
+            "pck_0_05": 0.8548387096774194,
+            "pck_0_10": 0.9516129032258065
+          }
+        }
+      }
+    },
+    {
+      "epoch": 11,
+      "train_loss": 0.0025457541643738478,
+      "val": {
+        "visible_points": 356,
+        "loss": 0.0037992963849696154,
+        "mean_error_roi_fraction": 0.04868761822581291,
+        "median_error_roi_fraction": 0.032783184200525284,
+        "pck_0_05": 0.7415730337078652,
+        "pck_0_10": 0.8904494382022472,
+        "per_finger": {
+          "index": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.026846681721508503,
+            "pck_0_05": 0.8469387755102041,
+            "pck_0_10": 0.9591836734693877
+          },
+          "middle": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.0406867191195488,
+            "pck_0_05": 0.5918367346938775,
+            "pck_0_10": 0.7755102040816326
+          },
+          "ring": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.031821862794458866,
+            "pck_0_05": 0.7142857142857143,
+            "pck_0_10": 0.8979591836734694
+          },
+          "little": {
+            "visible_points": 62,
+            "median_error_roi_fraction": 0.028869520872831345,
+            "pck_0_05": 0.8548387096774194,
+            "pck_0_10": 0.9516129032258065
+          }
+        }
+      }
+    },
+    {
+      "epoch": 12,
+      "train_loss": 0.002518923180452077,
+      "val": {
+        "visible_points": 356,
+        "loss": 0.0038681532940922003,
+        "mean_error_roi_fraction": 0.049294374883174896,
+        "median_error_roi_fraction": 0.03337796777486801,
+        "pck_0_05": 0.7303370786516854,
+        "pck_0_10": 0.8876404494382022,
+        "per_finger": {
+          "index": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.02975541353225708,
+            "pck_0_05": 0.8061224489795918,
+            "pck_0_10": 0.9591836734693877
+          },
+          "middle": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.039167944341897964,
+            "pck_0_05": 0.6122448979591837,
+            "pck_0_10": 0.7653061224489796
+          },
+          "ring": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.030700949020683765,
+            "pck_0_05": 0.7040816326530612,
+            "pck_0_10": 0.8979591836734694
+          },
+          "little": {
+            "visible_points": 62,
+            "median_error_roi_fraction": 0.03022162150591612,
+            "pck_0_05": 0.8387096774193549,
+            "pck_0_10": 0.9516129032258065
+          }
+        }
+      }
+    },
+    {
+      "epoch": 13,
+      "train_loss": 0.0024926084071092507,
+      "val": {
+        "visible_points": 356,
+        "loss": 0.0038200647087856653,
+        "mean_error_roi_fraction": 0.04898972436785698,
+        "median_error_roi_fraction": 0.032783184200525284,
+        "pck_0_05": 0.7275280898876404,
+        "pck_0_10": 0.8876404494382022,
+        "per_finger": {
+          "index": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.0276951240375638,
+            "pck_0_05": 0.8061224489795918,
+            "pck_0_10": 0.9591836734693877
+          },
+          "middle": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.04003478027880192,
+            "pck_0_05": 0.6020408163265306,
+            "pck_0_10": 0.7653061224489796
+          },
+          "ring": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.030700949020683765,
+            "pck_0_05": 0.7040816326530612,
+            "pck_0_10": 0.8979591836734694
+          },
+          "little": {
+            "visible_points": 62,
+            "median_error_roi_fraction": 0.028869520872831345,
+            "pck_0_05": 0.8387096774193549,
+            "pck_0_10": 0.9516129032258065
+          }
+        }
+      }
+    },
+    {
+      "epoch": 14,
+      "train_loss": 0.002474018778632873,
+      "val": {
+        "visible_points": 356,
+        "loss": 0.0038240468463177813,
+        "mean_error_roi_fraction": 0.049462463706731796,
+        "median_error_roi_fraction": 0.03422972932457924,
+        "pck_0_05": 0.7191011235955056,
+        "pck_0_10": 0.8848314606741573,
+        "per_finger": {
+          "index": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.029735233634710312,
+            "pck_0_05": 0.7959183673469388,
+            "pck_0_10": 0.9591836734693877
+          },
+          "middle": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.03894757479429245,
+            "pck_0_05": 0.5918367346938775,
+            "pck_0_10": 0.7551020408163265
+          },
+          "ring": {
+            "visible_points": 98,
+            "median_error_roi_fraction": 0.030487176962196827,
+            "pck_0_05": 0.6938775510204082,
+            "pck_0_10": 0.8979591836734694
+          },
+          "little": {
+            "visible_points": 62,
+            "median_error_roi_fraction": 0.031731133349239826,
+            "pck_0_05": 0.8387096774193549,
+            "pck_0_10": 0.9516129032258065
+          }
+        }
+      }
+    }
+  ],
+  "best_epoch": 4,
+  "best_validation": {
+    "visible_points": 356,
+    "loss": 0.0038399966520353637,
+    "mean_error_roi_fraction": 0.04622948542237282,
+    "median_error_roi_fraction": 0.03422972932457924,
+    "pck_0_05": 0.7359550561797753,
+    "pck_0_10": 0.9129213483146067,
+    "per_finger": {
+      "index": {
+        "visible_points": 98,
+        "median_error_roi_fraction": 0.02760182786732912,
+        "pck_0_05": 0.8061224489795918,
+        "pck_0_10": 0.9591836734693877
+      },
+      "middle": {
+        "visible_points": 98,
+        "median_error_roi_fraction": 0.0395219661295414,
+        "pck_0_05": 0.6428571428571429,
+        "pck_0_10": 0.8367346938775511
+      },
+      "ring": {
+        "visible_points": 98,
+        "median_error_roi_fraction": 0.030611434020102024,
+        "pck_0_05": 0.6938775510204082,
+        "pck_0_10": 0.9081632653061225
+      },
+      "little": {
+        "visible_points": 62,
+        "median_error_roi_fraction": 0.03358155116438866,
+        "pck_0_05": 0.8387096774193549,
+        "pck_0_10": 0.967741935483871
+      }
+    }
+  },
+  "parameter_count": 56452
+}

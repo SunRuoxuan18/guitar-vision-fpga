@@ -1,0 +1,7 @@
+[Unit]
+Description=Unified FPGA guitar audio and fretboard vision
+Requires=fretlens-av.service
+After=fretlens-av.service
+
+[Install]
+WantedBy=multi-user.target

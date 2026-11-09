@@ -1,0 +1,70 @@
+"""Generate a reproducible PYNQ notebook without programming a live overlay."""
+import json
+from pathlib import Path
+
+
+def cell(kind, source):
+    result = {"cell_type": kind, "metadata": {}, "source": source.splitlines(True)}
+    if kind == "code":
+        result.update(execution_count=None, outputs=[])
+    return result
+
+
+root = Path(__file__).resolve().parents[1]
+cells = [
+    cell("markdown", "# FPGA信号采集及协议分析仪\n\n"
+         "音视频融合应用验证。此 Notebook 运行在 PYNQ 的 ARM 处理器上。"
+         "默认只读取已经运行的 HTTP 服务，不重复加载 Overlay，也不启动第二个 MMIO 读取器。"
+         "上电恢复应先按 RETURN_CHECKLIST.md 完成。"),
+    cell("code", "import json\nimport urllib.request\nfrom pathlib import Path\n"
+         "ROOT = Path('/home/xilinx/audio_music')\n"
+         "def read_json(url):\n"
+         "    with urllib.request.urlopen(url, timeout=3) as response:\n"
+         "        return json.load(response)\n"
+         "audio = read_json('http://127.0.0.1:8081/api/audio')\n"
+         "print({key: audio.get(key) for key in ('status', 'source', 'sequence', 'stale', 'algorithm_version')})\n"
+         "assert audio.get('source') == 'hardware', 'This is not a hardware source'\n"
+         "assert not audio.get('stale'), 'Audio snapshot has expired'\n"
+         "assert audio.get('fft', {}).get('analysis_test_mode', 0) == 0, 'Internal diagnostic input selected'\n"),
+    cell("markdown", "## 采集与协议元数据\n\n"
+         "I2S 是 Inter IC Sound，传输音频样本；I2C 是 Inter Integrated Circuit，配置 Codec。"
+         "AXI 是 Advanced eXtensible Interface，用于 ARM 访问 PL 寄存器。"
+         "下列内容来自 PL FFT 的驱动元数据，并非对任意外部 UART 或 SPI 的解析结果。"),
+    cell("code", "metadata = audio.get('fft') or {}\n"
+         "print(json.dumps(metadata, ensure_ascii=False, indent=2))\n"
+         "print('notes:', audio.get('notes'))\n"
+         "print('raw chord:', audio.get('chord'))\n"
+         "print('stable chord:', audio.get('stable_chord'))\n"
+         "print('tracking:', audio.get('tracking'))\n"
+         "print('scale candidates:', audio.get('scale_evidence'))\n"),
+    cell("code", "import numpy as np\nimport matplotlib.pyplot as plt\n"
+         "power = np.asarray(audio['spectrum']['bins'], dtype=float)\n"
+         "fs = audio['config']['sample_rate']\nn = audio['config']['fft_size']\n"
+         "frequency = np.arange(len(power)) * fs / n\n"
+         "plt.figure(figsize=(10, 3))\n"
+         "plt.plot(frequency, 10 * np.log10(np.maximum(power, 1e-12)))\n"
+         "plt.xlim(0, 3000)\nplt.xlabel('Frequency Hz')\nplt.ylabel('Power dB relative units')\n"
+         "plt.grid(True)\nplt.show()\n"),
+    cell("markdown", "## 摄像头与处理边界\n\n"
+         "USB Video Class 即 USB 视频设备类，由 Linux 驱动接收摄像头数据，不是 PL 中手写 USB 协议。"
+         "当前指板几何由 PS 上的 OpenCV 处理，手部关键点由电脑浏览器 MediaPipe 处理。"
+         "灰度和 Sobel 的 PL 模块已单独仿真，尚未连接到此实时 USB 视频通路。"
+         "模型尚未就绪时 YOLO 不会伪造检测结果。"),
+    cell("code", "vision = read_json('http://127.0.0.1:8082/api/vision/status')\n"
+         "print(json.dumps(vision, ensure_ascii=False, indent=2))\n"
+         "from IPython.display import Image, display\n"
+         "with urllib.request.urlopen('http://127.0.0.1:8082/vision/frame.jpg', timeout=3) as response:\n"
+         "    display(Image(data=response.read()))\n"),
+    cell("markdown", "## 验证记录\n\n"
+         "依次弹六根空弦，再弹 C、Am、G，记录持续音时的显示、换和弦响应及静音清除。"
+         "视觉测试应覆盖琴颈平移、转动、局部遮挡和移出画面。"
+         "相同音高可在不同弦与品位出现；指尖投影不证明压弦，缺失指尖不等于闷音或空弦。"
+         "不能将 4096/48000 的 85.33 ms 窗长当作整个系统的实测延迟。")
+]
+notebook = {"cells": cells, "metadata": {"kernelspec": {
+    "display_name": "Python 3", "language": "python", "name": "python3"},
+    "language_info": {"name": "python", "version": "3.8"}},
+    "nbformat": 4, "nbformat_minor": 4}
+target = root / "pynq/FretLens_Demo.ipynb"
+target.write_text(json.dumps(notebook, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+print(target)
