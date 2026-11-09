@@ -2,6 +2,8 @@
 
 基于 PYNQ-Z2 / XC7Z020 的吉他指板视觉分析与和弦识别原型。仓库保存视觉系统的核心源码、RTL/HLS 工程、测试、关键实验证据和最终实验报告，便于复核结果并继续开发。
 
+[下载 2026-11-09 工程快照](https://github.com/SunRuoxuan18/guitar-vision-fpga/releases/download/v2026.11.09/guitar-vision-fpga-20261109.zip)
+
 ## 项目范围
 
 - 从 Logitech C922 摄像头采集指板画面，并在 PYNQ-Z2 上运行视觉与音频服务。
